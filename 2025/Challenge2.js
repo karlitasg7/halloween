@@ -6,22 +6,12 @@ function countSheep(letters) {
     mapLetters.set(letter, (mapLetters.get(letter) || 0) + 1);
   }
 
-  let totalSheepWords = 0;
+  const s = mapLetters.get("s") || 0;
+  const h = mapLetters.get("h") || 0;
+  const e = mapLetters.get("e") || 0;
+  const p = mapLetters.get("p") || 0;
 
-  while (
-    mapLetters.get("s") >= 1 &&
-    mapLetters.get("h") >= 1 &&
-    mapLetters.get("e") >= 2 &&
-    mapLetters.get("p") >= 1
-  ) {
-    totalSheepWords++;
-    mapLetters.set("s", mapLetters.get("s") - 1);
-    mapLetters.set("h", mapLetters.get("h") - 1);
-    mapLetters.set("e", mapLetters.get("e") - 2);
-    mapLetters.set("p", mapLetters.get("p") - 1);
-  }
-
-  return totalSheepWords;
+  return Math.floor(Math.min(s, h, e / 2, p));
 }
 
 console.log(countSheep("sheepxsheepy")); // → 2 (you can form "sheep" twice)

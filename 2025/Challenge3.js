@@ -1,23 +1,25 @@
 // https://www.halloween.dev/retos/2025/3
 
 function myersCalendar(year) {
-  if (!year || isNaN(year) || year < 1900 || year > 2100) {
+  if (isNaN(year) || year < 1900 || year > 9999) {
     return [];
   }
 
-  const dates = [];
+  const dates = new Set();
+  const FRIDAY = 5;
+  const DAY_13 = 13;
 
-  for (let i = 0; i < 12; i++) {
-    const date = new Date(year, i, 13);
-    if (date.getDay() === 5) {
-      dates.push(date.toISOString().split("T")[0]);
-    }
-    if (i == 9) {
-      dates.push(`${year}-10-31`);
+  for (let month = 1; month <= 12; month++) {
+    const date = new Date(year, month - 1, DAY_13);
+    if (date.getDay() === FRIDAY) {
+      const monthStr = String(month).padStart(2, "0");
+      dates.add(`${year}-${monthStr}-${DAY_13}`);
     }
   }
 
-  return dates;
+  dates.add(`${year}-10-31`);
+
+  return Array.from(dates).sort();
 }
 
 console.log(myersCalendar(2025)); // → ['2025-06-13', '2025-09-13', '2025-10-31']
